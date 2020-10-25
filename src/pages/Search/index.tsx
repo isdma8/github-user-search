@@ -1,10 +1,27 @@
-import ButtonIcon from 'core/components/ButtonIcon';
-import React from 'react';
+import { GitHubProfile } from 'core/types/GitHubProfile';
+import React, { useEffect, useState } from 'react';
 import Form from './components/Form';
+import ImageLoader from './components/Loaders/ImageLoader/ImageLoader';
+import InfoLoader from './components/Loaders/InfoLoader/InfoLoader';
+import SearchResponse from './components/SearchResponse';
 
 import './styles.scss';
 
-const Search = () => (
+const Search = () => {
+
+    const [profile, setProfile] = useState<GitHubProfile>();
+    
+
+    const [isLoading, setIsLoading] = useState(false);
+    
+    useEffect(()=> {
+
+        //console.log(profile?.id);
+        
+    }, [profile, isLoading]);
+
+
+return (    
     <div>
         <div className="container-search">
             <div className="search-form">
@@ -12,62 +29,33 @@ const Search = () => (
                     <h4>
                         Encontre um perfil Github
                     </h4>
-                    <Form />
+                    <Form 
+                        profileGitHub= {(profile) => setProfile(profile)}
+                        loading = {isLoading => setIsLoading(isLoading) }
+                    />
                 </div>
             </div>
         </div>
-
+        {(profile || isLoading) && (
         <div className="container-result">
             <div className="container-result-align">
+
+                {isLoading ? (
+                                <>
+                                    <div className="imageloader-container"><ImageLoader /></div>
+                                    <div className="infoloader-container"><InfoLoader /></div>
+                                </>
+                            ) : (<SearchResponse gitProfileFound={profile}/>)
+                    
+                }
                 
-                <div className="img-box">
-                    <img src="https://media1.gamingreplay.com/162642-tm_thickbox_default/base-de-carregamento-para-dualsense-playstation-5-ps5.jpg" alt="hello" className="form-img-found"/>
-                    <div className="container-button">
-                        <ButtonIcon text="Ver perfil"/>
-                    </div>
-                </div>
-                    
-                <div>
-                    <div className="small-info">
-                        <div className="small-info-1">
-                            <h6>Repositórios públicos: 62</h6>
-                        </div>
-                        <div className="small-info-2">
-                            <h6>Seguidores: 127</h6>
-                        </div>
-                        <div className="small-info-3">
-                            <h6>Seguindo: 416</h6>
-                        </div>
-                    </div>
-                    <div className="big-info">
-                        <div className="form-result-title">
-                            <h4>Informações</h4>
-                        </div>
-                        
-                        <div className="form-result-field">
-                            <h5><b>Empresa: </b>@ZupIT</h5> 
-                        </div>
-                        <div className="form-result-field">
-                            <h5><b>Website/Blog: </b>https://thewashington.dev</h5> 
-                        </div>
-                        <div className="form-result-field">
-                            <h5><b>Localidade: </b>Uberlândia</h5> 
-                        </div>
-                        <div className="form-result-field">
-                            <h5><b>Membro desde: </b>19/10/2013</h5> 
-                        </div>
-                    </div>
-                    
-                </div>
             </div>
-            
-            
-        </div>
-
+        </div>)
+    }
     </div>
-
-
 );
+
+};
 
 
 export default Search; 
