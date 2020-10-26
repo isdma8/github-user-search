@@ -12,7 +12,7 @@ type Params = {
 
 const Form = ({profileGitHub, loading}: Params) => {
 
-    const [nameToSearch, setNameToSearch] = useState('Usuário GitHub');
+    const [nameToSearch, setNameToSearch] = useState('');
     
         const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
@@ -43,7 +43,8 @@ return (
                                 name="githubname"
                                 type="text" 
                                 onChange={handleOnChangeNameToSearch}
-                                //                                                                                                                                                                                            to"
+                                placeholder="Usuário GitHub"
+                                //                                                                                                                                                                                         to"
                             />
                     </div>
                     <ButtonIcon text='Encontrar'/>
